@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:intl/intl.dart';
 import 'package:location/location.dart';
+import 'package:weather/Config.dart';
 
 Future<Map<String, dynamic>> makeHttpsRequest(Uri uri) async {
   var httpClient = new HttpClient();
@@ -16,15 +17,15 @@ Future<Map<String, dynamic>> makeHttpsRequest(Uri uri) async {
 }
 
 Future<List<double>> getCoordinates() async {
-  Map<String, double> location = await new Location().getLocation();
-  double lat = location["latitude"];
-  double lon = location["longitude"];
+  LocationData location = await new Location().getLocation();
+  double lat = location.latitude;
+  double lon = location.longitude;
 
   return [lat, lon];
 }
 
 Future<String> getLocation(double lat, double lon) async {
-  var key = 'YOUR_OPENWEATHER_API_KEY';
+  var key = Config.GOOGLE_MAPS_APIKEY;
   var url = '/maps/api/geocode/json';
   var uri = new Uri.https(
     'maps.googleapis.com',
